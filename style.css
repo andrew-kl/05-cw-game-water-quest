@@ -147,3 +147,46 @@ button:disabled {
   background-color: #cbccd1;
   cursor: not-allowed;
 }
+
+/* Messagebox styles */
+.messagebox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.messagebox-content {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  padding: 32px 24px;
+  min-width: 320px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+#messagebox-close {
+  background: #2E9DF7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#messagebox-close:hover {
+  background: #2196f3;
+}

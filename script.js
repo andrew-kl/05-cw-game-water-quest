@@ -76,7 +76,34 @@ function endGame() {
   clearInterval(spawnInterval); // Stop spawning water cans
   clearInterval(timerInterval); // Stop decrementing the timer
   document.querySelectorAll('.grid-cell').forEach(cell => (cell.innerHTML = '')); // Clear all cells
+
+  // Show game over message with the total collected items
+  // TODO: replace with "win" or "try again" message per README.md
+  showMessageBox('Game over! You collected ' + currentCans + ' water cans.');
   document.getElementById('start-game').disabled = false; // Re-enable the start button
+}
+
+// Displays a message to the user in a special message box
+// AI-generated, used for game over message
+function showMessageBox(message) {
+  let box = document.getElementById('game-messagebox');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'game-messagebox';
+    box.className = 'messagebox';
+    box.innerHTML = `
+      <div class="messagebox-content">
+        <span id="messagebox-text"></span>
+        <button id="messagebox-close">OK</button>
+      </div>
+    `;
+    document.body.appendChild(box);
+    document.getElementById('messagebox-close').addEventListener('click', () => {
+      box.style.display = 'none';
+    });
+  }
+  document.getElementById('messagebox-text').textContent = message;
+  box.style.display = 'flex';
 }
 
 // Set up click handler for the start button
