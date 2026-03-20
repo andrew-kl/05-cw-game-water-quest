@@ -5,6 +5,19 @@ let gameActive = false;      // Tracks if game is currently running
 let spawnInterval;          // Holds the interval for spawning items
 let timerInterval;          // Holds the intervals for timer ticks
 
+// Game outcome messages
+const WIN_MESSAGES = [
+  "Congratulations! You've collected enough water cans and won the game!",
+  "Well done! You've successfully completed the Water Quest!",
+  "You did it! The water can goal is reached, you win!"
+];
+
+const LOSE_MESSAGES = [
+  "Time's up! You fell short of the goal. Try again!",
+  "Game over! You didn't collect enough water cans. Another round?",
+  "Oh no! You ran out of time before collecting enough water cans. Let's give it another shot!"
+];
+
 // Creates the 3x3 game grid where items will appear
 function createGrid() {
   const grid = document.querySelector('.game-grid');
@@ -77,9 +90,15 @@ function endGame() {
   clearInterval(timerInterval); // Stop decrementing the timer
   document.querySelectorAll('.grid-cell').forEach(cell => (cell.innerHTML = '')); // Clear all cells
 
-  // Show game over message with the total collected items
-  // TODO: replace with "win" or "try again" message per README.md
-  showMessageBox('Game over! You collected ' + currentCans + ' water cans.');
+  // Show game over message based on the player's results
+  if (currentCans >= GOAL_CANS) {
+    const message = WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)];
+    showMessageBox(message);
+  } else {
+    const message = LOSE_MESSAGES[Math.floor(Math.random() * LOSE_MESSAGES.length)];
+    showMessageBox(message);
+  }
+
   document.getElementById('start-game').disabled = false; // Re-enable the start button
 }
 
