@@ -83,7 +83,8 @@ function collectItem(event) {
 
   // Check if the clicked element is a water can or a rock
   if (target.classList.contains('water-can') || target.classList.contains('rock')) {
-    currentCans += target.classList.contains('water-can') ? 1 : -1; // Increment or decrement score accordingly
+    // Increment or decrement score accordingly (without going below 0)
+    currentCans += target.classList.contains('water-can') ? 1 : (currentCans > 0 ? -1 : 0); 
     target.parentElement.remove(); // Remove the clicked object from the grid
     document.getElementById('current-cans').textContent = currentCans; // Update the displayed score
   }
