@@ -59,6 +59,13 @@ h1 img {
   text-align: center;
 }
 
+.game-rock-hint {
+  font-size: 16px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #797979;
+}
+
 .stats {
   display: flex;
   justify-content: space-around;
@@ -95,8 +102,8 @@ h1 img {
   overflow: hidden;
 }
 
-.water-can-wrapper {
-  pointer-events: none; /* Allow clicks to pass through the wrapper to the water can */
+.water-can-wrapper, .rock-wrapper {
+  pointer-events: none; /* Allow clicks to pass through the wrapper to the child element */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -106,11 +113,10 @@ h1 img {
   /* Ensure the wrapper is properly centered */
 }
 
-.water-can {
-  pointer-events: auto; /* Enable clicks on the water can */
+.water-can, .rock {
+  pointer-events: auto; /* Enable clicks on the object */
   width: 100%;
   height: 100%;
-  background-image: url('img/water-can.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -118,6 +124,14 @@ h1 img {
   border-radius: 50%;
   animation: popUp 0.5s cubic-bezier(0.17, 0.67, 0.34, 2);
   transform-origin: center; /* Ensure scaling happens from the center */
+}
+
+.water-can {
+  background-image: url('img/water-can.png');
+}
+
+.rock {
+  background-image: url('img/rock.png');
 }
 
 @keyframes popUp {

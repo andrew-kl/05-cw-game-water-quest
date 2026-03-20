@@ -1,6 +1,7 @@
 // Game configuration and state variables
 const GOAL_CANS = 20;        // Total items needed to collect
 const TIMER_INITIAL = 30;     // Initial time in seconds for the game
+const ROCK_CHANCE = 0.3;        // Chance to spawn a rock instead of a water can
 let currentCans = 0;         // Current number of items collected
 let gameActive = false;      // Tracks if game is currently running
 let spawnInterval;          // Holds the interval for spawning items
@@ -34,25 +35,35 @@ function createGrid() {
 createGrid();
 
 // Update game instructions based on GOAL_CANS value
-document.querySelector('.game-instructions').textContent = `Collect ${GOAL_CANS} items to complete the game!`;
+document.querySelector('.game-instructions').textContent = `Collect ${GOAL_CANS} water cans to complete the game!`;
 
 // Spawns a new item in a random grid cell
 function spawnWaterCan() {
   if (!gameActive) return; // Stop if the game is not active
   const cells = document.querySelectorAll('.grid-cell');
   
-  // Clear all cells before spawning a new water can
+  // Clear all cells before spawning a new object
   cells.forEach(cell => (cell.innerHTML = ''));
 
-  // Select a random cell from the grid to place the water can
+  // Select a random cell from the grid to place the object
   const randomCell = cells[Math.floor(Math.random() * cells.length)];
 
   // Use a template literal to create the wrapper and water-can element
-  randomCell.innerHTML = `
-    <div class="water-can-wrapper">
-      <div class="water-can"></div>
-    </div>
-  `;
+  // 60% chance to spawn a water can (+1 point on collection)
+  // 40% chance to spawn a rock (-1 point on collection)
+  if (Math.random() < 1 - ROCK_CHANCE) {
+    randomCell.innerHTML = `
+      <div class="water-can-wrapper">
+        <div class="water-can"></div>
+      </div>
+    `;
+  } else {
+    randomCell.innerHTML = `
+      <div class="rock-wrapper">
+        <div class="rock"></div>
+      </div>
+    `;
+  }
 }
 
 function updateTimer() {
@@ -65,17 +76,16 @@ function updateTimer() {
   }
 }
 
-function collectWaterCan(event) {
+function collectItem(event) {
   if (!gameActive) return; // Ignore clicks if the game is not active
   const target = event.target;
 
-  // Check if the clicked element is a water can
-  if (target.classList.contains('water-can')) {
-    currentCans++; // Increment the count of collected items
-    target.parentElement.remove(); // Remove the water can from the grid
-    document.getElementById('current-cans').textContent = currentCans; // Update the displayed count
+  // Check if the clicked element is a water can or a rock
+  if (target.classList.contains('water-can') || target.classList.contains('rock')) {
+    currentCans += target.classList.contains('water-can') ? 1 : -1; // Increment or decrement score accordingly
+    target.parentElement.remove(); // Remove the clicked object from the grid
+    document.getElementById('current-cans').textContent = currentCans; // Update the displayed score
   }
-
 }
 
 // Initializes and starts a new game
@@ -89,13 +99,13 @@ function startGame() {
   document.getElementById('timer').textContent = TIMER_INITIAL; // Reset the timer
 
   createGrid(); // Set up the game grid
-  spawnInterval = setInterval(spawnWaterCan, 1000); // Spawn water cans every second
+  spawnInterval = setInterval(spawnWaterCan, 1000); // Spawn objects every SPAWN_INTERVAL milliseconds
   timerInterval = setInterval(updateTimer, 1000); // Decrement the timer every second
 }
 
 function endGame() {
   gameActive = false; // Mark the game as inactive
-  clearInterval(spawnInterval); // Stop spawning water cans
+  clearInterval(spawnInterval); // Stop spawning objects
   clearInterval(timerInterval); // Stop decrementing the timer
   document.querySelectorAll('.grid-cell').forEach(cell => (cell.innerHTML = '')); // Clear all cells
 
@@ -136,4 +146,4 @@ function showMessageBox(message) {
 
 // Set up click handler for the start button
 document.getElementById('start-game').addEventListener('click', startGame);
-document.querySelector('.game-grid').addEventListener('click', collectWaterCan);
+document.querySelector('.game-grid').addEventListener('click', collectItem);
