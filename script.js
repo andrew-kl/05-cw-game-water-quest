@@ -1,5 +1,5 @@
 // Game configuration and state variables
-const GOAL_CANS = 25;        // Total items needed to collect
+const GOAL_CANS = 20;        // Total items needed to collect
 let currentCans = 0;         // Current number of items collected
 let gameActive = false;      // Tracks if game is currently running
 let spawnInterval;          // Holds the interval for spawning items
@@ -31,6 +31,9 @@ function createGrid() {
 
 // Ensure the grid is created when the page loads
 createGrid();
+
+// Update game instructions based on GOAL_CANS value
+document.querySelector('.game-instructions').textContent = `Collect ${GOAL_CANS} items to complete the game!`;
 
 // Spawns a new item in a random grid cell
 function spawnWaterCan() {
