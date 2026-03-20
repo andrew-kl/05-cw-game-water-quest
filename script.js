@@ -39,7 +39,8 @@ function spawnWaterCan() {
 
 // Initializes and starts a new game
 function startGame() {
-  if (gameActive) return; // Prevent starting a new game if one is already active
+  document.getElementById('start-game').disabled = true; // Disable the start button when the game starts
+  if (gameActive) return; // Failsafe: prevent starting a new game if one is already active
   gameActive = true;
   createGrid(); // Set up the game grid
   spawnInterval = setInterval(spawnWaterCan, 1000); // Spawn water cans every second
@@ -48,6 +49,7 @@ function startGame() {
 function endGame() {
   gameActive = false; // Mark the game as inactive
   clearInterval(spawnInterval); // Stop spawning water cans
+  document.getElementById('start-game').disabled = false; // Re-enable the start button
 }
 
 // Set up click handler for the start button

@@ -141,3 +141,8 @@ button {
   margin: 30px auto 0;
   transition: background-color 0.2s;
 }
+
+button:disabled {
+  background-color: #cbccd1;
+  cursor: not-allowed;
+}
