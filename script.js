@@ -114,6 +114,7 @@ function endGame() {
   if (currentCans >= GOAL_CANS) {
     const message = WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)];
     showMessageBox(message);
+    showConfetti(); // Show confetti animation for winning
   } else {
     const message = LOSE_MESSAGES[Math.floor(Math.random() * LOSE_MESSAGES.length)];
     showMessageBox(message);
@@ -143,6 +144,20 @@ function showMessageBox(message) {
   }
   document.getElementById('messagebox-text').textContent = message;
   box.style.display = 'flex';
+}
+
+// Creates a confetti animation on the screen to celebrate winning the game
+// AI-generated.
+function showConfetti() {
+  for (let i = 0; i < 120; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.animationDelay = Math.random() * 2 + 's';
+    confetti.style.background = `hsl(${Math.random()*360},100%,60%)`;
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
+  }
 }
 
 // Set up click handler for the start button

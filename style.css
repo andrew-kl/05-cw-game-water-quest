@@ -204,3 +204,22 @@ button:disabled {
 #messagebox-close:hover {
   background: #2196f3;
 }
+
+.confetti {
+  position: fixed;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0.8;
+  z-index: 2000;
+  animation: confetti-fall 3s linear forwards;
+}
+
+@keyframes confetti-fall {
+  to {
+    top: 100vh;
+    transform: rotate(360deg);
+    opacity: 0.2;
+  }
+}
