@@ -1,7 +1,8 @@
 // Game configuration and state variables
 const GOAL_CANS = 20;        // Total items needed to collect
 const TIMER_INITIAL = 30;     // Initial time in seconds for the game
-const ROCK_CHANCE = 0.3;        // Chance to spawn a rock instead of a water can
+const ROCK_CHANCE = 0.25;        // Chance to spawn a rock instead of a water can
+const SPAWN_INTERVAL = 850;   // Time in milliseconds between spawns
 let currentCans = 0;         // Current number of items collected
 let gameActive = false;      // Tracks if game is currently running
 let spawnInterval;          // Holds the interval for spawning items
@@ -99,7 +100,7 @@ function startGame() {
   document.getElementById('timer').textContent = TIMER_INITIAL; // Reset the timer
 
   createGrid(); // Set up the game grid
-  spawnInterval = setInterval(spawnWaterCan, 1000); // Spawn objects every SPAWN_INTERVAL milliseconds
+  spawnInterval = setInterval(spawnWaterCan, SPAWN_INTERVAL); // Spawn objects every SPAWN_INTERVAL milliseconds
   timerInterval = setInterval(updateTimer, 1000); // Decrement the timer every second
 }
 
