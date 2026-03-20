@@ -37,6 +37,19 @@ function spawnWaterCan() {
   `;
 }
 
+function collectWaterCan(event) {
+  if (!gameActive) return; // Ignore clicks if the game is not active
+  const target = event.target;
+
+  // Check if the clicked element is a water can
+  if (target.classList.contains('water-can')) {
+    currentCans++; // Increment the count of collected items
+    target.parentElement.remove(); // Remove the water can from the grid
+    document.getElementById('current-cans').textContent = currentCans; // Update the displayed count
+  }
+
+}
+
 // Initializes and starts a new game
 function startGame() {
   document.getElementById('start-game').disabled = true; // Disable the start button when the game starts
@@ -54,3 +67,4 @@ function endGame() {
 
 // Set up click handler for the start button
 document.getElementById('start-game').addEventListener('click', startGame);
+document.querySelector('.game-grid').addEventListener('click', collectWaterCan);
